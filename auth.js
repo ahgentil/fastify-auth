@@ -67,13 +67,14 @@ function auth (functions, opts) {
 
     this.nextAuth = function nextAuth (err) {
       const func = that.functions[that.i++]
-      that.request.log.info('---- ' + func.name)
 
       if (!func) {
         that.completeAuth(err)
         return
       }
 
+      that.request.log.info('---- ' + func.name)
+      
       const maybePromise = func(that.request, that.reply, that.onAuth)
 
       if (maybePromise && typeof maybePromise.then === 'function') {
