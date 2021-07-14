@@ -66,31 +66,37 @@ function auth (functions, opts) {
     const that = this
 
     this.nextAuth = function nextAuth (err) {
+that.request.log.info('1 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
       const func = that.functions[that.i++]
 
       if (!func) {
+that.request.log.info('2 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         that.completeAuth(err)
         return
       }
 
-      that.request.log.info('---- ' + func.name)
-      
       const maybePromise = func(that.request, that.reply, that.onAuth)
 
       if (maybePromise && typeof maybePromise.then === 'function') {
+that.request.log.info('3 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         maybePromise.then(results => that.onAuth(null, results), that.onAuth)
       }
     }
 
     this.onAuth = function onAuth (err, results) {
+that.request.log.info('4 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
       if (that.options.relation === 'or') {
+that.request.log.info('5 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         if (err) {
+that.request.log.info('6 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
           return that.nextAuth(err)
         }
 
         return that.completeAuth()
       } else {
+that.request.log.info('7 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         if (err) {
+that.request.log.info('8 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
           return that.completeAuth(err)
         }
 
@@ -99,18 +105,23 @@ function auth (functions, opts) {
     }
 
     this.completeAuth = function (err) {
+that.request.log.info('9 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
       if (that.start) {
+that.request.log.info('10 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         that.start = false
         that.firstResult = err
       }
 
       if (that.options.run === 'all' && that.i < that.functions.length) {
+that.request.log.info('11 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         return that.nextAuth(err)
       }
 
       if (that.firstResult && (!that.reply.raw.statusCode || that.reply.raw.statusCode < 400)) {
+that.request.log.info('12 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         that.reply.code(401)
       } else if (!that.firstResult && that.reply.raw.statusCode && that.reply.raw.statusCode >= 400) {
+that.request.log.info('13 ' + 'i' + that.i + 'start' + that.start + 'functions' + that.functions + 'options' + that.options + 'firstResult' + that.firstResult);
         that.reply.code(200)
       }
 
