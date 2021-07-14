@@ -76,7 +76,7 @@ that.request.log.info('2 ' + ', i: ' + that.i + ', start: ' + that.start + ', fi
         that.completeAuth(err)
         return
       }
-
+that.request.log.info('2.1 ' + ', func: ' + func.name);
       const maybePromise = func(that.request, that.reply, that.onAuth)
 
       if (maybePromise && typeof maybePromise.then === 'function') {
